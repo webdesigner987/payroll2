@@ -1,0 +1,106 @@
+{% extends 'payrollapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper" style="min-height: 100vh;">
+  <div class="container">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="logo text-center m-4">
+        <img src="{% static 'payrollapp/images/logo.png' %}" alt="LOGO" class="img-fluid mt-3">
+      </div>
+
+      <h2 class="text-dark fw-bold fs-4 mb-2 text-center text-white">Step 2: Payroll Details</h2>
+
+      <!-- Render non-field errors (if any) at the top of the form -->
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger fw-bold">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- form -->
+      <form method="post" action="{% url 'step_3' %}" class="rounded bg-white shadow p-5" novalidate
+        style="background-color: #242b4d !important;">
+        {% csrf_token %}
+
+        <!-- Payroll Enabled checkbox -->
+        <div class="form-group text-white">
+          <div class="form-check">
+            {{ form.payroll_enabled }}
+            <label class="form-check-label" for="{{ form.payroll_enabled.id_for_label }}">
+              {{ form.payroll_enabled.label_tag }} Description
+            </label>
+          </div>
+          {% if form.payroll_enabled.help_text %}
+          <small class="form-text text-secondary mb-2">{{ form.payroll_enabled.help_text }}</small>
+          {% endif %}
+        </div>
+
+        <!-- Additional fields to be shown/hidden -->
+        <div class="additional-fields {% if not form.payroll_enabled.value %}d-none{% endif %}">
+
+          <!-- Payroll Date field -->
+          <div class="form-group text-white mt-3">
+            <label for="{{ form.payroll_date.id_for_label }}">
+              {{ form.payroll_date.label_tag }} Description
+            </label>
+            {{ form.payroll_date }}
+            {% if form.payroll_date.help_text %}
+            <small class="form-text text-secondary mb-2">{{ form.payroll_date.help_text }}</small>
+            {% endif %}
+          </div>
+
+          <!-- Automatic Run Payroll checkbox -->
+          <div class="form-group text-white mt-3">
+            <div class="form-check ">
+              {{ form.auto_run_payroll }}
+              <label class="form-check-label" for="{{ form.auto_run_payroll.id_for_label }}">
+                {{ form.auto_run_payroll.label_tag }} Description
+              </label>
+            </div>
+            {% if form.auto_run_payroll.help_text %}
+            <small class="form-text text-secondary mb-2">{{ form.auto_run_payroll.help_text }}</small>
+            {% endif %}
+          </div>
+
+          <!-- Employee Request Salary Advance checkbox -->
+          <div class="form-group text-white mt-3">
+            <div class="form-check">
+              {{ form.employee_request_advance }}
+              <label class="form-check-label" for="{{ form.employee_request_advance.id_for_label }}">
+                {{ form.employee_request_advance.label_tag }} Description
+              </label>
+            </div>
+            {% if form.employee_request_advance.help_text %}
+            <small class="form-text text-secondary mb-2">{{ form.employee_request_advance.help_text }}</small>
+            {% endif %}
+          </div>
+
+        </div>
+
+        <!-- JavaScript to toggle the additional fields -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var payrollEnabledCheckbox = document.getElementById("id_payroll_enabled");
+            var additionalFieldsContainer = document.querySelector(".additional-fields");
+
+            // Initial state
+            toggleAdditionalFields();
+
+            // Attach event listener to the checkbox
+            payrollEnabledCheckbox.addEventListener('change', toggleAdditionalFields);
+
+            function toggleAdditionalFields() {
+              additionalFieldsContainer.classList.toggle("d-none", !payrollEnabledCheckbox.checked);
+            }
+          });
+        </script>
+
+        <button type="submit" class="btn btn-primary submit_btn w-100 my-4">Save and Next</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

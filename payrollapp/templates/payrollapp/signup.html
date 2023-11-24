@@ -1,0 +1,50 @@
+{% extends 'payrollapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="wrapper">
+  <div class="container">
+    <div class="col-sm-6 offset-sm-3">
+      <div class="logo text-center">
+        <img src="{% static 'payrollapp/images/logo.png' %}" alt="LOGO" class="img-fluid mt-3">
+      </div>
+
+      <!-- Render non-field errors (if any) at the top of the form -->
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger fw-bold">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- form -->
+      <form action="" method="POST" class="rounded bg-white shadow p-5" novalidate
+        style="background-color: #242b4d !important;">
+        {% csrf_token %}
+        <h3 class="text-white fw-bold fs-4 mb-2 text-center">Create an Account</h3>
+        <div class="fw-normal text-white mb-4 text-center">
+          Already have an account? <a href="{% url 'login' %}" class="text-warning fw-bold text-decoration-none">Login
+            In Here</a>
+        </div>
+        {% for field in form %}
+        <div class="form-group" style="color: white; margin-bottom: 15px;">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.errors %}
+          <small class="text-danger fw-bold">
+            {% for error in field.errors %}
+            {{ error }}
+            {% endfor %}
+          </small>
+          {% endif %}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Sign Up" class="btn btn-primary submit_btn w-100 my-4"
+          style="background-color: #3876BF; color: white;">
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock content %}

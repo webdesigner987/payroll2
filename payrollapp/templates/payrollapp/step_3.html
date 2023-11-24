@@ -1,0 +1,98 @@
+{% extends 'payrollapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper" style="min-height: 100vh;">
+  <div class="container">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="logo text-center m-4">
+        <img src="{% static 'payrollapp/images/logo.png' %}" alt="LOGO" class="img-fluid mt-3">
+      </div>
+
+      <h2 class="text-white fw-bold fs-4 mb-2 text-center">Step 3: Set Employee Salary Structure</h2>
+
+      <!-- Additional fields specific to Step 3 -->
+      <form method="post" action="{% url 'dashboard' %}" class="rounded bg-white shadow p-5" novalidate
+        style="background-color: #242b4d !important;">
+        {% csrf_token %}
+
+        <!-- Default Salary Structure -->
+        <div class="form-group text-white text-center">
+          <h4>Default Salary Structure</h4>
+          <p class="text-secondary">Description: ABC</p>
+          {{ form.use_default_salary_structure }}
+          <label class="form-check-label" for="{{ form.use_default_salary_structure.id_for_label }}">
+            {{ form.use_default_salary_structure.label_tag }}
+          </label>
+        </div>
+
+        <!-- Description for "If You Good" -->
+        <div class="form-group text-white text-center">
+          <p>Lorem ipsum dolor sit amet. Aut possimus minima et ducimus beatae qui tenetur deserunt sed rerum distinctio
+            qui quis
+            laudantium. Non tenetur nulla rem impedit repudiandae aut maiores quas. Et illo quisquam et ducimus velit
+            sit
+            consequuntur laudantium et consequatur architecto ut modi modi. Ea optio voluptates ut rerum perferendis quo
+            beatae
+            labore aut voluptatem officiis aut aliquam voluptas ut Quis voluptas est beatae labore.</p>
+        </div>
+
+
+        <table class="table table-striped table-hover table-dark mt-4">
+          <thead>
+            <tr>
+              <th scope="col">Salary Component</th>
+              <th scope="col">% Age of CTC</th>
+              <th scope="col">Percentage or Fixed</th>
+              <th scope="col">Taxabale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row">Basic Salary</td>
+              <td>Percentage</td>
+              <td>50</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td scope="row">Basic Salary</td>
+              <td>Percentage</td>
+              <td>50</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td scope="row">Basic Salary</td>
+              <td>Percentage</td>
+              <td>50</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td scope="row">Basic Salary</td>
+              <td>Percentage</td>
+              <td>50</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td scope="row">Basic Salary</td>
+              <td>Percentage</td>
+              <td>50</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Checkbox for "Consider FBP" -->
+        <div class="form-group">
+          {{ form.consider_fbp }}
+          <label class="form-check-label" for="{{ form.consider_fbp.id_for_label }}">
+            {{ form.consider_fbp.label_tag }}
+          </label>
+        </div>
+
+        <!-- Continue Button -->
+        <button type="submit" class="btn btn-primary submit_btn w-100 my-4">Continue</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

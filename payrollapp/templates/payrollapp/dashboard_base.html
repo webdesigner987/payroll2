@@ -1,0 +1,152 @@
+<!doctype html>
+{% load custom_filters %}
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="{% static 'payrollapp/css/dashboard_bootstrap.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'payrollapp/css/custom_style.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="background-color: var(--bg); color: var(--font);">
+  <nav class="navbar navbar-expand-lg" style="z-index: 2; background-color: var(--sidebar);">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1 top-navbar" style="color: var(--white); font-weight: 600;">Company-Name</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"
+              style="color: var(--white); font-weight: 500;">Home</a>
+          </li>
+          <li class=" nav-item">
+            <a class="nav-link" href="#" style="color: var(--font); font-weight: 500;">Link</a>
+          </li>
+          <li class="nav-item dropdown" style="color: var(--font); font-weight: 500;">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Icon -->
+        <div class="btn-group dropdown">
+          <button class="btn btn-link" type="button" style="color: var(--white); font-weight: 500;">
+            <i class="fa-solid fa-bell fa-lg"></i>
+          </button>
+          <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static"
+            style="color: var(--white); font-weight: 500;">
+            <i class="fas fa-user fa-lg"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-bottom">
+            <li><a class="dropdown-item custom_menu_dropdown" href="#">Submenu 1</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar Menu -->
+  <div class="container-fluid px-4">
+    <div class="row align-items-start gx-5">
+
+      <!-- Left Side bar -->
+      <div class="col-2 d-flex flex-column shadow "
+        style="background-color: var(--sidebar); padding-top: 20px;  z-index: 1; min-height: 100%; height: 100%;">
+        <a href="{% url 'dashboard' %}" class="{{dashboard}}">Dashboard</a>
+        <a href="{% url 'mypayslips' %}" class="{{mypayslips}}">My Pay Slips</a>
+        <a href="{% url 'attendance' %}" class="{{attendance}}">Attendance</a>
+        <a href="{% url 'taxdeduction' %}" class="{{taxdeduction}}">Tax Deductions</a>
+        <a href="{% url 'reimbursements' %}" class="{{reimbursements}}">Reimbursements</a>
+        <a href="{% url 'documents' %}" class="{{documents}}">Documents</a>
+        <a href="{% url 'help' %}" class="{{help}}">Help</a>
+
+        {% if request.user|is_hr_admin_or_founder %}
+
+        <div class="my-2 d-flex flex-column">
+          <p style="background-color: var(--font); color: var(--white); border-radius: 8px;" class="p-1">Admin Options
+          </p>
+          <a href="{% url 'people' %}" class="{{people}}">People</a>
+          <li class="nav-item dropdown" style="list-style: none;">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Pay Employees
+            </a>
+            <ul class="dropdown-menu" style="background-color: var(--bg);">
+              <li><a class="dropdown-item" href="#">Run Payroll</a></li>
+              <li><a class="dropdown-item" href="#">One-time Payment</a></li>
+              <li><a class="dropdown-item" href="#">Advance Salary</a></li>
+              <li><a class="dropdown-item" href="#">Reimbursements</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" style="list-style: none;">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Pay Contractors
+            </a>
+            <ul class="dropdown-menu" style="background-color: var(--bg);">
+              <li><a class="dropdown-item" href="#">Payments</a></li>
+              <li><a class="dropdown-item" href="#">Reimbursements</a></li>
+            </ul>
+          </li>
+          <a href="#">Reports</a>
+          <a href="#">Company Details</a>
+          <a href="#">Setting</a>
+          <a href="#">Get Insurance</a>
+          <a href="#">Integrations</a>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <!-- Center Content -->
+      <div class="col-7">
+        {% block content %}
+        {% endblock content %}
+      </div>
+
+
+      <!-- Right Side bar -->
+      <div class="col-3 d-flex flex-column shadow"
+        style=" background-color: var(--sidebar); padding: 20px;  z-index: 1; min-height: 100vh;">
+        {% block rightsidebar %}
+        {% if user.is_authenticated %}
+        <h3 style="color: var(--white); font-weight: 500;">Welcome, {{ user_first_name }}</h3>
+        {% endif %}
+        {% endblock rightsidebar %}
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Footer -->
+  <footer class="text-white text-center py-3" style="background-color: var(--sidebar);">
+    &copy; 2023 Your Website Name. All rights reserved.
+  </footer>
+
+  <script src="{% static 'payrollapp/js/dashboard_jquery.js' %}"></script>
+  <script src="{% static 'payrollapp/js/dashboard_bootstrap.js' %}"></script>
+  <script src="{% static 'payrollapp/js/dashboard_popper.js' %}"></script>
+</body>
+
+</html>

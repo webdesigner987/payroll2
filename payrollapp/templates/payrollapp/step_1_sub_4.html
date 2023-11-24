@@ -1,0 +1,78 @@
+{% extends 'payrollapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper" style="min-height: 100vh;">
+  <div class="container">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="logo text-center m-4">
+        <img src="{% static 'payrollapp/images/logo.png' %}" alt="LOGO" class="img-fluid mt-3">
+      </div>
+
+      <h2 class="text-white fw-bold fs-4 mb-2 text-center">Step 1: Additional Details</h2>
+
+      <!-- Render non-field errors (if any) at the top of the form -->
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger fw-bold">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- form -->
+      <form method="post" action="{% url 'step_1_sub_1' %}" class="rounded bg-white shadow p-5" novalidate
+        style="background-color: #242b4d !important;">
+        {% csrf_token %}
+
+        <!-- Render each form field with its label, input, and error message below -->
+        {% for field in form %}
+        <div class="form-group text-white">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.errors %}
+          <small class="text-danger fw-bold">
+            {% for error in field.errors %}
+            {{ error }}
+            {% endfor %}
+          </small>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <a href="{% url 'step_1_sub_1' %}" class="btn btn-secondary w-100">Edit GST</a>
+          </div>
+          <div class="col-md-6 mb-3">
+            <!-- Button to trigger the confirmation modal -->
+            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+              data-bs-target="#confirmationModal">Continue</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Confirmation Modal -->
+      <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmationModalLabel">Confirmation Modal</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Submit Finally</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Edit</button>
+              <a href="{% url 'success_view' %}" class="btn btn-primary">Confirm</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

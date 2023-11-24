@@ -1,0 +1,346 @@
+{% extends 'payrollapp/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper">
+  <div class="container">
+
+
+    <form method="post" action="{% url 'addone_employee' %}" class="mt-4" novalidate>
+      {% csrf_token %}
+      <h2 style="text-align: center; font-weight: bold; color: white;">Basic information</h2>
+      <hr>
+
+      <div class="my-3 ">
+        <label for="{{ form.employee_type.id_for_label }}">Employee Type:</label>
+        {{ form.employee_type }}
+        {% if form.employee_type.errors %}
+        <p style="color: rgb(245, 15, 15); font-weight: bold;">
+          {% for error in form.email.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="my-3">
+        <label for="{{ form.name.id_for_label }}">Name:</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+        <p style="color: rgb(245, 15, 15); font-weight: bold;">
+          {% for error in form.email.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+        <p style="color: rgb(245, 15, 15); font-weight: bold;">
+          {% for error in form.email.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.hire_date.id_for_label }}">Hiring Date:</label>
+        {{ form.hire_date }}
+        {% if form.hire_date.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.hire_date.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.job_title.id_for_label }}">Job Title:</label>
+        {{ form.job_title }}
+        {% if form.job_title.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.job_title.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+
+
+      <label for="{{ form.department.id_for_label }}">Department:</label>
+      {{ form.department }}
+      {% if form.department.errors %}
+      <p style="color: red; font-weight: bold;">
+        {% for error in form.department.errors %}
+        {{ error }}
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <div class="my-3">
+        <label for="{{ form.manager.id_for_label }}">Manager:</label>
+        {{ form.manager }}
+        {% if form.manager.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.manager.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="my-3">
+        <label for="{{ form.annual_salary.id_for_label }}">Annual Salary:</label>
+        {{ form.annual_salary }}
+        {% if form.annual_salary.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.annual_salary.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="my-3">
+        <label for="{{ form.location.id_for_label }}">Location:</label>
+        {{ form.location }}
+        {% if form.location.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.location.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.resident_of_india.id_for_label }}">Resident of India:</label>
+        {{ form.resident_of_india }}
+      </div>
+      {% if form.resident_of_india.errors %}
+      <p style="color: red; font-weight: bold;">
+        {% for error in form.resident_of_india.errors %}
+        {{ error }}
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <h2 style="text-align: center; font-weight: bold; margin: 20px 0; color: white;">Payment Information</h2>
+      <hr>
+      <div>
+        <label for="{{ form.pan_number.id_for_label }}">PAN Number:</label>
+        {{ form.pan_number }}
+      </div>
+      {% if form.pan_number.errors %}
+      <p style="color: red; font-weight: bold;">
+        {% for error in form.pan_number.errors %}
+        {{ error }}
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <div>
+        <label for="{{ form.ifsc_code.id_for_label }}">IFSC Code:</label>
+        {{ form.ifsc_code }}
+      </div>
+      {% if form.ifsc_code.errors %}
+      <p style="color: red; font-weight: bold;">
+        {% for error in form.ifsc_code.errors %}
+        {{ error }}
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <div>
+        <label for="{{ form.account_number.id_for_label }}">Account Number:</label>
+        {{ form.account_number }}
+      </div>
+      {% if form.account_number.errors %}
+      <p style="color: red; font-weight: bold;">
+        {% for error in form.account_number.errors %}
+        {{ error }}
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <div>
+        <label for="{{ form.beneficiary_name.id_for_label }}">Beneficiary Name:</label>
+        {{ form.beneficiary_name }}
+      </div>
+      {% if form.beneficiary_name.errors %}
+      <p style="color: red; font-weight: bold;">
+        {% for error in form.beneficiary_name.errors %}
+        {{ error }}
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <h2 style="text-align: center; font-weight: bold; margin: 20px 0; color: white;">Provident Fund, Professional Tax,
+        ESI & LWF
+      </h2>
+
+      <div class="my-3">
+        <label for="{{ form.pf_status.id_for_label }}">PF Status:</label>
+        {{ form.pf_status }}
+
+        {% if form.pf_status.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.pf_status.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.provident_fund_uan.id_for_label }}">Provident Fund UAN:</label>
+        {{ form.provident_fund_uan }}
+
+        {% if form.provident_fund_uan.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.provident_fund_uan.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.pf_wages_calculation.id_for_label }}">PF Wages Calculation:</label>
+        {{ form.pf_wages_calculation }}
+
+        {% if form.pf_wages_calculation.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.pf_wages_calculation.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.include_employer_contribution.id_for_label }}">Include Employer Contribution to
+          PF:</label>
+        {{ form.include_employer_contribution }}
+
+        {% if form.include_employer_contribution.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.include_employer_contribution.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="my-3">
+        <label for="{{ form.contribute_to_pf_eps.id_for_label }}">Contribute to PF EPS (Pension Scheme):</label>
+        {{ form.contribute_to_pf_eps }}
+        {% if form.contribute_to_pf_eps.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.contribute_to_pf_eps.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.pt_status.id_for_label }}">PT Status:</label>
+        {{ form.pt_status }}
+
+        {% if form.pt_status.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.pt_status.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="my-3">
+        <label for="{{ form.pt_location.id_for_label }}">PT Location:</label>
+        {{ form.pt_location }}
+
+        {% if form.pt_location.errors %}
+        <p style="color: red; font-weight: bold;">
+          {% for error in form.pt_location.errors %}
+          {{ error }}
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="mt-4 my-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="#" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+
+    <!-- Add this div for the pop-up -->
+    <div id="successPopup" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Your account has been added.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        console.log("Document ready");
+
+        // Submit form via AJAX
+        $('form').submit(function (event) {
+          event.preventDefault();
+
+          var form = $(this);
+
+          $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function (response) {
+              console.log("Form submission successful:", response);
+
+              if (response.success) {
+                // Show the success modal
+                $('#successPopup').modal('show');
+
+                // Redirect to the specified URL after 5 seconds
+                setTimeout(function () {
+                  window.location.href = response.redirect_url;
+                }, 5000);
+              } else {
+                // Form submission failed, display validation errors
+                displayErrors(response.errors);
+              }
+            },
+            error: function (error) {
+              console.log("Form submission error:", error);
+            }
+          });
+        });
+
+        // Function to display validation errors
+        function displayErrors(errors) {
+          // Clear any existing error messages
+          $('.text-danger').remove();
+
+          // Display new error messages
+          $.each(errors, function (field, messages) {
+            var fieldId = 'id_' + field;
+            var errorHtml = '<small id="' + fieldId + '-error" class="text-danger fw-bold">';
+            errorHtml += messages.join('<br>');
+            errorHtml += '</small>';
+            $('[name="' + field + '"]').parent().append(errorHtml);
+          });
+        }
+      });
+    </script>
+
+
+
+</section>
+{% endblock content %}
+
+{% block rightsidebar %}
+<h3>Kindly Fill your Details</h3>
+{% endblock rightsidebar %}

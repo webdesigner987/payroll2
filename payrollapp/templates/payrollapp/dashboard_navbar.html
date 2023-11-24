@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg bg-dark" style="z-index: 2;">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1 top-navbar text-white">Navbar-Heading-Name</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown text-white">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Icon -->
+      <div class="btn-group dropdown">
+        <button class="btn btn-link text-white" type="button">
+          <i class="fa-solid fa-bell fa-lg"></i>
+        </button>
+        <button class="btn btn-link text-white dropdown-toggle" type="button" data-bs-toggle="dropdown"
+          data-bs-display="static">
+          <i class="fas fa-user fa-lg"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-bottom">
+          <li><a class="dropdown-item" href="#">Submenu 1</a></li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

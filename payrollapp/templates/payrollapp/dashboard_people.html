@@ -1,0 +1,194 @@
+{% extends 'payrollapp/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper">
+  <div class="container">
+    <h1 class="fw-bold mb-4 text-center p-5 rounded"
+      style="font-size: 40px !important; background-color: var(--font); color: var(--sidebar);">
+      Employee List</h1>
+
+    <form method="get" action="{% url 'people' %}" class="mb-4">
+      <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by name or job title"
+          value="{{ search_query }}">
+      </div>
+    </form>
+
+    <!-- Tabs navigation -->
+    <ul class="nav nav-tabs" id="employeeTabs">
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'all' %}active{% endif %} fw-semibold" id="all-tab" data-bs-toggle="tab"
+          href="#all" style="color: var(--font);">All (Employees)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'employees' %}active{% endif %} fw-semibold" id="employees-tab"
+          data-bs-toggle="tab" href="#employees" style="color: var(--font);">Employees</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if active_tab == 'contractors' %}active{% endif %} fw-semibold" id="contractors-tab"
+          data-bs-toggle="tab" href="#contractors" style="color: var(--font);">Contractors</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content mt-3">
+      <!-- All Tab -->
+      <div class="tab-pane fade {% if active_tab == 'all' %}show active{% endif %}" id="all">
+        {% if all_employees %}
+        <table class="table table-primary table-hover">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Employee Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for employee in all_employees %}
+            <tr>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.job_title }}</td>
+              <td>{{ employee.employee_type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p id="noResultMessage">No Such Employee Present</p>
+        {% endif %}
+      </div>
+
+      <!-- Employees Tab -->
+      <div class="tab-pane fade {% if active_tab == 'employees' %}show active{% endif %}" id="employees">
+        {% if employees %}
+        <table class="table table-striped table-primary table-hover">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Employee Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for employee in employees %}
+            <tr>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.job_title }}</td>
+              <td>{{ employee.employee_type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p id="noResultMessage">No Such Employee Present</p>
+        {% endif %}
+      </div>
+
+      <!-- Contractors Tab -->
+      <div class="tab-pane fade {% if active_tab == 'contractors' %}show active{% endif %}" id="contractors">
+        {% if contractors %}
+        <table class="table table-striped table-primary table-hover">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Employee Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for employee in contractors %}
+            <tr>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.job_title }}</td>
+              <td>{{ employee.employee_type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p id="noResultMessage">No Such Employee Present</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Activate the default tab
+    $('#employeeTabs a[href="#{{ active_tab }}"]').tab('show');
+
+    // Handle real-time search as user types
+    $('input[name="search"]').on('input', function () {
+      var searchValue = $(this).val().trim().toLowerCase();
+
+      // Filter table rows based on the search value for All tab
+      filterTableRows(searchValue, 'all');
+
+      // Filter table rows based on the search value for Employees tab
+      filterTableRows(searchValue, 'employees');
+
+      // Filter table rows based on the search value for Contractors tab
+      filterTableRows(searchValue, 'contractors');
+    });
+
+    // Clear search input when form is submitted with an empty query
+    $('form').submit(function () {
+      var searchInput = $(this).find('input[name="search"]');
+      if (searchInput.val().trim() === '') {
+        searchInput.val('').removeAttr('name');
+        // Reset to display all rows when the search input is empty
+        filterTableRows('', 'all');
+        filterTableRows('', 'employees');
+        filterTableRows('', 'contractors');
+      }
+    });
+
+    // Function to filter table rows based on search value and tab
+    function filterTableRows(searchValue, tab) {
+      var matchingRows = $(`#${tab} tbody tr`).filter(function () {
+        var name = $(this).find('td:first-child').text().toLowerCase();
+        var jobTitle = $(this).find('td:nth-child(2)').text().toLowerCase();
+
+        return searchValue === '' || name.includes(searchValue) || jobTitle.includes(searchValue);
+      });
+
+      // Show/hide matching rows and "No Employee Found" message
+      $(`#${tab} tbody tr`).hide(); // Hide all rows
+      matchingRows.show();
+
+      var noResultMessage = $(`#${tab} #noResultMessage`);
+      noResultMessage.toggle(matchingRows.length === 0 && searchValue !== '');
+    }
+  });
+</script>
+
+{% endblock content %}
+{% block rightsidebar %}
+<div class="rightsidebar">
+  <div class="addone">
+    <a type="button" class="btn text-start"
+      style="padding: 20px; font-size: 15px; margin: 10px 0px; border: 2px solid var(--font);"
+      href="{% url 'addone_employee' %}">
+      <h5>Add One</h5>
+      <p style="color: var(--fontdesc);">Add a single employee or contractor in a second </p>
+    </a>
+  </div>
+  <div class="addmulti">
+    <a type="button" class="btn text-start"
+      style="padding: 20px; font-size: 15px; margin: 10px 0px; border: 2px solid var(--font);" href="#">
+      <h5>Add Multiple</h5>
+      <p style="color: var(--fontdesc);">Add a single employee or contractor in a second </p>
+    </a>
+  </div>
+  <div class="invite">
+    <a type="button" class="btn text-start"
+      style="padding: 20px; font-size: 15px; margin: 10px 0px; border: 2px solid var(--font);" href="#">
+      <h5>Invite Many</h5>
+      <p style="color: var(--fontdesc);">Add a single employee or contractor in a second </p>
+    </a>
+  </div>
+</div>
+
+{% endblock rightsidebar %}

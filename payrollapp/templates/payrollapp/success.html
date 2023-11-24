@@ -1,0 +1,25 @@
+{% extends 'payrollapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper" style="min-height: 100vh;">
+  <div class="container">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="logo text-center m-4">
+        <img src="{% static 'payrollapp/images/logo.png' %}" alt="LOGO" class="img-fluid mt-3">
+      </div>
+
+      <h2 class="text-white fw-bold fs-4 mb-2 text-center">Success!</h2>
+
+      <div class="alert alert-success fw-bold text-center">
+        <h5 style="color: black;">Step 1 is complicated. Now move to Step 2.</h5>
+      </div>
+
+      <!-- Add the Bootstrap button -->
+      <div class="text-center">
+        <a href="{% url 'step_2' %}" class="btn btn-primary ">Go to Step 2</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

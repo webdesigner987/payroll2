@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
+
+/* Custom CSS for the side navbar */
+
+:root {
+  --bg: #E3F4F4;
+  --sidebar: #C4DFDF;
+  --white: #ffffff;
+  --black: #000000;
+  --font: #041562;
+  --fontdesc: #3876BF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+
+
+.col-2.d-flex.flex-column a,
+.col-3.d-flex.flex-column a {
+  text-decoration: none;
+  color: var(--font);
+  padding: 9px 10px;
+  font-weight: 500;
+}
+
+.col-2.d-flex.flex-column a:hover,
+.col-3.d-flex.flex-column a:hover {
+  background-color: var(--font);
+  color: var(--white);
+  border-radius: 8px;
+}
+
+.col-2.d-flex.flex-column a.active,
+.col-3.d-flex.flex-column a.active {
+  background-color: var(--font);
+  color: var(--white);
+  border-radius: 8px;
+}
+
+
+
+
+
+
+
+.content {
+  margin-left: 210px;
+  padding: 20px;
+}
+
+/* sidebar dropdown */
+
+.custom-dropdown a {
+  color: var(--black);
+  background-color: var(--white);
+}
+
+.custom-dropdown a:hover {
+  background-color: var(--bg);
+  color: var(--white);
+}
+
+.dropdown-menu.custom-dropdown.show {
+  padding: 0px;
+}
+
+.dropdown-menu .dropdown-item.custom_menu_dropdown a:hover {
+  background-color: var(--bg);
+}
+
+.sidenav2 {
+  height: 100%;
+  width: 210px;
+  position: sticky;
+  top: 0;
+  float: right;
+  /* Float the sidebar to the right */
+  background-color: var(--sidebar);
+  padding-top: 60px;
+}
+
+.sidenav2 a {
+  padding: 15px 25px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
+  display: block;
+}
+
+.sidenav2 a:hover {
+  background-color: #35155D;
+}
+
+.content {
+  padding: 20px;
+  color: var(--white);
+}
+
+.footer {
+  width: 100%;
+  background-color: var(--sidebar);
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.footer {
+  width: 100%;
+  background-color: var(--sidebar);
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* POP UP */
+.custom-modal-width {
+  max-width: 80%;
+}
+
+.custom-row-padding {
+  padding: 20px;
+}

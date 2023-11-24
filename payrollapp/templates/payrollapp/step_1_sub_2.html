@@ -1,0 +1,50 @@
+<!-- payrollapp/templates/payrollapp/step_1_sub_2.html -->
+{% extends 'payrollapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="wrapper" style="min-height: 100vh;">
+  <div class="container">
+    <div class="col-sm-6 offset-sm-3">
+      <div class="logo text-center m-4">
+        <img src="{% static 'payrollapp/images/logo.png' %}" alt="LOGO" class="img-fluid mt-3">
+      </div>
+
+      <h2 class="text-white fw-bold fs-4 mb-2 text-center">Step 1: Organization Details</h2>
+
+      <!-- Render non-field errors (if any) at the top of the form -->
+      {% if form.non_field_errors %}
+      <div class="alert alert-danger fw-bold">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- form -->
+      <form method="post" action="{% url 'step_1_sub_2' %}" class="rounded bg-white shadow p-5" novalidate
+        style="background-color: #242b4d !important;">
+        {% csrf_token %}
+
+        <!-- Render each form field with its label, input, and error message below -->
+        {% for field in form %}
+        <div class="form-group text-white">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.errors %}
+          <small class="text-danger fw-bold">
+            {% for error in field.errors %}
+            {{ error }}
+            {% endfor %}
+          </small>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary submit_btn w-100 my-4">Continue</button>
+        <a href="{% url 'step_1_sub_1' %}" class="btn btn-secondary submit_btn w-100 my-2">Fill via GST</a>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
